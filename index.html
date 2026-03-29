@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EMKA TEAM – Montaż Okien i Drzwi | Lasocice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0a0f1e;
+      --navy2: #111827;
+      --steel: #1e2d45;
+      --accent: #e8a020;
+      --accent2: #f5c045;
+      --silver: #9baab8;
+      --light: #d8e4ef;
+      --white: #f4f8fc;
+      --glass: rgba(255,255,255,0.05);
+      --glow: rgba(232, 160, 32, 0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      width: 40px; height: 40px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      opacity: 0.5;
+      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      padding: 0.8rem 4rem;
+      background: rgba(10, 15, 30, 0.97);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.8rem;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 42px; height: 42px;
+      background: var(--accent);
+      clip-path: polygon(0 0, 75% 0, 100% 25%, 100% 100%, 25% 100%, 0 75%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--navy);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .nav-logo-text span { color: var(--accent); }
+    .nav-logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--silver);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver);
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute;
+      bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.35s ease;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--navy) !important;
+      padding: 0.55rem 1.4rem;
+      font-weight: 700 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.15em !important;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: background 0.3s, color 0.3s !important;
+    }
+    .nav-cta:hover { background: var(--accent2) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(30,45,70,0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,160,32,0.08) 0%, transparent 60%),
+        linear-gradient(135deg, var(--navy) 0%, #0d1628 60%, #162035 100%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, transparent 100%);
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 10rem 4rem 6rem 8rem;
+      position: relative; z-index: 2;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(232,160,32,0.1);
+      border: 1px solid rgba(232,160,32,0.25);
+      padding: 0.45rem 1rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      width: fit-content;
+      animation: fadeSlideUp 0.8s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+
+    .hero-h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 8vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      animation: fadeSlideUp 0.8s 0.15s ease both;
+    }
+    .hero-h1 .line1 { display: block; color: var(--white); }
+    .hero-h1 .line2 { display: block; color: var(--accent); }
+    .hero-h1 .line3 { display: block; color: var(--silver); font-size: 0.55em; letter-spacing: 0.18em; }
+
+    .hero-desc {
+      margin-top: 2rem;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--silver);
+      max-width: 420px;
+      animation: fadeSlideUp 0.8s 0.3s ease both;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; align-items: center;
+      animation: fadeSlideUp 0.8s 0.45s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      background: var(--accent);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(232,160,32,0.3);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--silver);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .btn-secondary:hover { color: var(--accent); }
+    .btn-arrow {
+      width: 28px; height: 28px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+    .btn-secondary:hover .btn-arrow { transform: translateX(4px); }
+
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex; gap: 2.5rem;
+      animation: fadeSlideUp 0.8s 0.6s ease both;
+    }
+    .stat { position: relative; }
+    .stat::before {
+      content: '';
+      position: absolute;
+      left: -1.2rem; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 60%;
+      background: rgba(255,255,255,0.1);
+    }
+    .stat:first-child::before { display: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-top: 0.2rem;
+    }
+
+    .hero-right {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual {
+      position: relative;
+      width: 520px; height: 520px;
+      animation: fadeSlideUp 0.8s 0.2s ease both;
+    }
+    .window-graphic {
+      position: absolute;
+      inset: 40px;
+      border: 2px solid rgba(232,160,32,0.3);
+      background: linear-gradient(135deg, rgba(30,45,70,0.6) 0%, rgba(15,25,45,0.8) 100%);
+      box-shadow:
+        inset 0 0 60px rgba(232,160,32,0.05),
+        0 0 80px rgba(232,160,32,0.1),
+        0 40px 100px rgba(0,0,0,0.5);
+    }
+    .window-inner {
+      position: absolute;
+      inset: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .window-pane {
+      border: 1px solid rgba(232,160,32,0.15);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .window-pane::after {
+      content: '';
+      position: absolute;
+      top: -100%; left: -100%;
+      width: 300%; height: 300%;
+      background: linear-gradient(
+        135deg, transparent 30%,
+        rgba(255,255,255,0.04) 50%,
+        transparent 70%
+      );
+      animation: shimmer 4s infinite;
+    }
+    .window-pane:nth-child(2)::after { animation-delay: 1s; }
+    .window-pane:nth-child(3)::after { animation-delay: 2s; }
+    .window-pane:nth-child(4)::after { animation-delay: 3s; }
+    @keyframes shimmer {
+      0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+      100% { transform: translateX(50%) translateY(50%) rotate(0deg); }
+    }
+    .window-handle {
+      position: absolute; right: -2px; top: 50%;
+      transform: translateY(-50%);
+      width: 16px; height: 60px;
+      background: var(--accent);
+      border-radius: 8px 0 0 8px;
+      opacity: 0.8;
+    }
+    .window-corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--accent);
+      border-style: solid;
+      opacity: 0.6;
+    }
+    .wc-tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+    .wc-tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+    .wc-bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
+    .wc-br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+
+    .hero-ring {
+      position: absolute;
+      border: 1px solid rgba(232,160,32,0.1);
+      border-radius: 50%;
+      animation: rotateSlow 20s linear infinite;
+    }
+    .hero-ring-1 { inset: -20px; }
+    .hero-ring-2 { inset: 0; animation-direction: reverse; animation-duration: 30s; }
+    .hero-ring::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: -4px; left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 12px var(--accent);
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .float-tag {
+      position: absolute;
+      background: var(--navy2);
+      border: 1px solid rgba(232,160,32,0.2);
+      padding: 0.7rem 1.2rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .float-tag-1 { top: 30px; left: 20px; animation: float1 6s ease-in-out infinite; }
+    .float-tag-2 { bottom: 40px; right: 10px; animation: float2 7s ease-in-out infinite; }
+    @keyframes float1 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SECTION BASE */
+    section { position: relative; overflow: hidden; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+    .section-title span { color: var(--accent); }
+
+    /* SERVICES */
+    .services {
+      padding: 8rem 8rem;
+      background: var(--navy2);
+    }
+    .services-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 5rem;
+    }
+    .services-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--silver);
+      align-self: end;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+    .service-card {
+      background: var(--steel);
+      padding: 2.8rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      cursor: pointer;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(232,160,32,0.07) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .service-card:hover { transform: translateY(-6px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-card:hover .service-icon { color: var(--accent); }
+
+    .service-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      letter-spacing: -0.02em;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-num { color: rgba(232,160,32,0.06); }
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      transition: color 0.3s;
+      color: var(--light);
+    }
+    .service-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .service-text {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--silver);
+    }
+    .service-features {
+      margin-top: 1.5rem;
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .service-features li {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--silver);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .service-features li::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    /* WHY US */
+    .whyus {
+      padding: 8rem 8rem;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    .whyus-visual {
+      position: relative;
+    }
+    .whyus-big-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 12rem;
+      line-height: 0.85;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .whyus-card {
+      position: absolute;
+      background: var(--steel);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem;
+    }
+    .whyus-card-1 { top: 5%; right: 0; width: 240px; }
+    .whyus-card-2 { bottom: 10%; left: 10%; width: 220px; }
+    .whyus-card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .whyus-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .whyus-card-text { font-size: 0.82rem; color: var(--silver); line-height: 1.6; }
+
+    .whyus-line {
+      width: 2px; height: 120px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      position: absolute;
+      left: 30%; top: 20%;
+    }
+
+    .reasons { display: flex; flex-direction: column; gap: 0; }
+    .reason {
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      transition: padding-left 0.3s ease;
+      cursor: pointer;
+    }
+    .reason:hover { padding-left: 0.5rem; }
+    .reason:hover .reason-num { color: var(--accent); }
+    .reason-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.15);
+      line-height: 1;
+      transition: color 0.3s;
+      min-width: 2.5rem;
+    }
+    .reason-content {}
+    .reason-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .reason-text { font-size: 0.88rem; font-weight: 300; color: var(--silver); line-height: 1.7; }
+
+    /* PROCES */
+    .process {
+      padding: 8rem 8rem;
+      background: var(--navy2);
+    }
+    .process-header { text-align: center; margin-bottom: 5rem; }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 50px; left: 12.5%; right: 12.5%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent), var(--accent), transparent);
+      opacity: 0.3;
+    }
+    .process-step {
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .process-step-num {
+      width: 100px; height: 100px;
+      margin: 0 auto 2rem;
+      background: var(--steel);
+      border: 1px solid rgba(232,160,32,0.2);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .process-step:hover .process-step-num {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .process-step:hover .process-step-num span { color: var(--navy); }
+    .process-step-num span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      transition: color 0.3s;
+    }
+    .process-step-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .process-step-text {
+      font-size: 0.82rem;
+      color: var(--silver);
+      line-height: 1.7;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 8rem 8rem;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .contact-info { }
+    .contact-details { margin-top: 3rem; display: flex; flex-direction: column; gap: 2.5rem; }
+    .contact-item {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      background: var(--steel);
+      border: 1px solid rgba(232,160,32,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .contact-item:hover .contact-icon {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .contact-item-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .contact-item-value {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+    .contact-item-value a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-item-value a:hover { color: var(--accent); }
+    .contact-item-sub {
+      font-size: 0.78rem;
+      color: var(--silver);
+      margin-top: 0.2rem;
+    }
+
+    /* CONTACT FORM */
+    .contact-form-wrap {
+      background: var(--steel);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem;
+      position: relative;
+    }
+    .contact-form-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .form-subtitle { font-size: 0.85rem; color: var(--silver); margin-bottom: 2rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver);
+    }
+    input, textarea, select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.9rem 1rem;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      background: rgba(232,160,32,0.04);
+    }
+    input::placeholder, textarea::placeholder { color: rgba(155,170,184,0.5); }
+    textarea { resize: vertical; min-height: 110px; }
+    select option { background: var(--navy2); }
+    .form-submit {
+      margin-top: 1.5rem;
+      width: 100%;
+      background: var(--accent);
+      color: var(--navy);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1.1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    }
+    .form-submit:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(232,160,32,0.25);
+    }
+
+    /* MAP SECTION */
+    .map-section {
+      background: var(--navy2);
+      padding: 5rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .map-info-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+    .map-info-title span { color: var(--accent); }
+    .map-info-text {
+      font-size: 0.9rem;
+      color: var(--silver);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .map-hours { display: flex; flex-direction: column; gap: 0.6rem; }
+    .map-hour-row {
+      display: flex; justify-content: space-between;
+      font-size: 0.83rem;
+      color: var(--silver);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .map-hour-row span:first-child { font-weight: 600; color: var(--light); }
+    .map-hour-row.today { color: var(--accent); }
+    .map-hour-row.today span:first-child { color: var(--accent); }
+    .map-embed {
+      width: 100%; height: 380px;
+      border: 1px solid rgba(255,255,255,0.06);
+      filter: grayscale(30%) brightness(0.85);
+      transition: filter 0.4s;
+    }
+    .map-embed:hover { filter: grayscale(0%) brightness(1); }
+
+    /* FOOTER */
+    footer {
+      background: #060b15;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 8rem 2rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-brand {}
+    .footer-logo {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      text-decoration: none;
+    }
+    .footer-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--silver);
+      max-width: 320px;
+    }
+    .footer-col-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .footer-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--silver);
+      transition: color 0.3s, padding-left 0.3s;
+      display: block;
+    }
+    .footer-links a:hover { color: var(--white); padding-left: 6px; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 2rem;
+    }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(155,170,184,0.5);
+    }
+    .footer-accent { color: var(--accent); }
+
+    /* BACK TO TOP */
+    .back-top {
+      position: fixed; bottom: 2.5rem; right: 2.5rem;
+      width: 50px; height: 50px;
+      background: var(--accent);
+      color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, background 0.3s;
+      z-index: 80;
+    }
+    .back-top.visible { opacity: 1; transform: translateY(0); }
+    .back-top:hover { background: var(--accent2); }
+
+    /* PHONE CTA FLOAT */
+    .phone-float {
+      position: fixed; bottom: 2.5rem; left: 2.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+      background: var(--steel);
+      border: 1px solid rgba(232,160,32,0.25);
+      padding: 0.8rem 1.4rem;
+      z-index: 80;
+      text-decoration: none;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .phone-float:hover { background: var(--accent); border-color: var(--accent); }
+    .phone-float:hover .pf-num { color: var(--navy); }
+    .phone-float:hover .pf-icon { color: var(--navy); }
+    .pf-icon { font-size: 1.1rem; color: var(--accent); transition: color 0.3s; }
+    .pf-text { display: flex; flex-direction: column; }
+    .pf-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--silver); transition: color 0.3s; }
+    .phone-float:hover .pf-label { color: var(--navy); }
+    .pf-num { font-weight: 700; font-size: 0.95rem; color: var(--white); transition: color 0.3s; }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* NOISE OVERLAY */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* MOBILE */
+    @media (max-width: 1100px) {
+      nav { padding: 1rem 2rem; }
+      nav.scrolled { padding: 0.8rem 2rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 8rem 2.5rem 4rem; }
+      .hero-right { display: none; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .services { padding: 5rem 2.5rem; }
+      .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .whyus { padding: 5rem 2.5rem; grid-template-columns: 1fr; gap: 3rem; }
+      .whyus-visual { display: none; }
+      .process { padding: 5rem 2.5rem; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid::before { display: none; }
+      .contact { padding: 5rem 2.5rem; grid-template-columns: 1fr; gap: 3rem; }
+      .map-section { padding: 4rem 2.5rem; grid-template-columns: 1fr; gap: 3rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      footer { padding: 3rem 2.5rem 2rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .phone-float { display: none; }
+      .back-top { right: 1.5rem; bottom: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Back To Top -->
+<a href="#top" class="back-top" id="backTop">↑</a>
+
+<!-- Phone Float -->
+<a href="tel:509055250" class="phone-float">
+  <span class="pf-icon">📞</span>
+  <span class="pf-text">
+    <span class="pf-label">Zadzwoń teraz</span>
+    <span class="pf-num">509 055 250</span>
+  </span>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#top" class="nav-logo">
+    <div class="nav-logo-icon">ET</div>
+    <div>
+      <div class="nav-logo-text">EMKA <span>TEAM</span></div>
+      <div class="nav-logo-sub">Okna & Drzwi</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#dlaczego">O Nas</a></li>
+    <li><a href="#proces">Proces</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="tel:509055250" class="nav-cta">509 055 250</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">Lasocice · Montaż & Serwis</div>
+    <h1 class="hero-h1">
+      <span class="line1">EMKA</span>
+      <span class="line2">TEAM</span>
+      <span class="line3">Windows Installation</span>
+    </h1>
+    <p class="hero-desc">
+      Profesjonalny montaż, serwis i naprawa okien, drzwi oraz rolet.
+      Działamy kompleksowo – od pierwszej konsultacji po finalny montaż.
+      Gwarancja jakości i terminowości.
+    </p>
+    <div class="hero-actions">
+      <a href="#kontakt" class="btn-primary">
+        Bezpłatna wycena
+        <span>→</span>
+      </a>
+      <a href="tel:509055250" class="btn-secondary">
+        Zadzwoń teraz
+        <span class="btn-arrow">→</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Lat doświadczenia</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Realizacji</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Gwarancji jakości</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-ring hero-ring-1"></div>
+      <div class="hero-ring hero-ring-2"></div>
+
+      <div class="window-graphic">
+        <div class="window-corner wc-tl"></div>
+        <div class="window-corner wc-tr"></div>
+        <div class="window-corner wc-bl"></div>
+        <div class="window-corner wc-br"></div>
+        <div class="window-inner">
+          <div class="window-pane"></div>
+          <div class="window-pane"></div>
+          <div class="window-pane"></div>
+          <div class="window-pane"></div>
+        </div>
+        <div class="window-handle"></div>
+      </div>
+
+      <div class="float-tag float-tag-1">⊞ Okna PVC</div>
+      <div class="float-tag float-tag-2">⊠ Rolety & Żaluzje</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="uslugi">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label">Nasza Oferta</div>
+      <h2 class="section-title">Usługi<br><span>w jednym miejscu</span></h2>
+    </div>
+    <p class="services-desc">
+      Zajmujemy się kompleksową obsługą stolarki otworowej.
+      Montujemy nowe produkty i serwisujemy istniejące –
+      szybko, profesjonalnie i z gwarancją na każdą pracę.
+    </p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <span class="service-icon">🪟</span>
+      <div class="service-name">Okna</div>
+      <p class="service-text">Montaż, wymiana i serwis okien PVC, aluminiowych i drewnianych. Dobieramy optymalne rozwiązania pod każdy projekt.</p>
+      <ul class="service-features">
+        <li>Okna PVC i aluminiowe</li>
+        <li>Okna drewniane i energooszczędne</li>
+        <li>Wymiana starych okien</li>
+        <li>Regulacja i serwis okuć</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <div class="service-num">02</div>
+      <span class="service-icon">🚪</span>
+      <div class="service-name">Drzwi</div>
+      <p class="service-text">Drzwi wejściowe, wewnętrzne i techniczne. Montaż z precyzją i dbałością o szczelność oraz bezpieczeństwo.</p>
+      <ul class="service-features">
+        <li>Drzwi wejściowe antywłamaniowe</li>
+        <li>Drzwi balkonowe i tarasowe</li>
+        <li>Drzwi wewnętrzne i przesuwne</li>
+        <li>Wymiana i modernizacja</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <div class="service-num">03</div>
+      <span class="service-icon">⊟</span>
+      <div class="service-name">Rolety</div>
+      <p class="service-text">Rolety zewnętrzne, żaluzje i moskitiery. Sterowanie ręczne lub elektryczne – zgodnie z potrzebami klienta.</p>
+      <ul class="service-features">
+        <li>Rolety zewnętrzne i wewnętrzne</li>
+        <li>Żaluzje fasadowe i venetian</li>
+        <li>Moskitiery stałe i rolowane</li>
+        <li>Automatyka i elektryka</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal" style="transition-delay:0.3s">
+      <div class="service-num">04</div>
+      <span class="service-icon">🔧</span>
+      <div class="service-name">Serwis & Naprawy</div>
+      <p class="service-text">Profesjonalny serwis i naprawa wszystkich elementów stolarki okiennej i drzwiowej. Szybka interwencja na terenie całego regionu.</p>
+      <ul class="service-features">
+        <li>Regulacja okien i drzwi</li>
+        <li>Wymiana uszczelek i okuć</li>
+        <li>Naprawa mechanizmów rolet</li>
+        <li>Pogwarancyjny serwis</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal" style="transition-delay:0.4s">
+      <div class="service-num">05</div>
+      <span class="service-icon">📐</span>
+      <div class="service-name">Pomiary & Doradztwo</div>
+      <p class="service-text">Bezpłatna wizja lokalna, profesjonalne pomiary i doradztwo w zakresie doboru produktów i rozwiązań technicznych.</p>
+      <ul class="service-features">
+        <li>Bezpłatny pomiar u klienta</li>
+        <li>Wycena na miejscu</li>
+        <li>Dobór produktów i kolorów</li>
+        <li>Dokumentacja techniczna</li>
+      </ul>
+    </div>
+
+    <div class="service-card reveal" style="transition-delay:0.5s">
+      <div class="service-num">06</div>
+      <span class="service-icon">🛡️</span>
+      <div class="service-name">Gwarancja & Opieka</div>
+      <p class="service-text">Gwarancja na wszystkie wykonane prace. Zapewniamy długoterminową opiekę serwisową i szybki czas reakcji w razie problemów.</p>
+      <ul class="service-features">
+        <li>Gwarancja na montaż i produkty</li>
+        <li>Szybki czas reakcji serwisu</li>
+        <li>Opieka posprzedażowa</li>
+        <li>Sprawdzone materiały</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="whyus" id="dlaczego">
+  <div class="whyus-visual">
+    <div class="whyus-big-text">OK<br>NA</div>
+    <div class="whyus-line"></div>
+    <div class="whyus-card whyus-card-1">
+      <div class="whyus-card-icon">⚡</div>
+      <div class="whyus-card-title">Szybka realizacja</div>
+      <div class="whyus-card-text">Terminowość to nasz priorytet. Zawsze dotrzymujemy ustalonych terminów.</div>
+    </div>
+    <div class="whyus-card whyus-card-2">
+      <div class="whyus-card-icon">📍</div>
+      <div class="whyus-card-title">Lokalnie z Lasocic</div>
+      <div class="whyus-card-text">Firma z regionu, doskonale znamy lokalne potrzeby i specyfikę.</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label reveal">Dlaczego My</div>
+    <h2 class="section-title reveal">Profesjonalizm<br><span>na każdym etapie</span></h2>
+    <div class="reasons">
+      <div class="reason reveal">
+        <div class="reason-num">01</div>
+        <div class="reason-content">
+          <div class="reason-title">Doświadczony zespół</div>
+          <p class="reason-text">Ponad 10 lat na rynku. Nasi monterzy posiadają certyfikaty i niezbędne uprawnienia. Każda praca wykonywana jest z najwyższą starannością.</p>
+        </div>
+      </div>
+      <div class="reason reveal">
+        <div class="reason-num">02</div>
+        <div class="reason-content">
+          <div class="reason-title">Kompleksowa obsługa</div>
+          <p class="reason-text">Od pomiaru, przez doradztwo i dostawę, aż po montaż i serwis – wszystko w jednych rękach. Nie musisz szukać wielu firm.</p>
+        </div>
+      </div>
+      <div class="reason reveal">
+        <div class="reason-num">03</div>
+        <div class="reason-content">
+          <div class="reason-title">Uczciwe ceny</div>
+          <p class="reason-text">Transparentna wycena bez ukrytych kosztów. Bezpłatny przyjazd i wycena na miejscu. Znasz cenę zanim cokolwiek podpiszesz.</p>
+        </div>
+      </div>
+      <div class="reason reveal">
+        <div class="reason-num">04</div>
+        <div class="reason-content">
+          <div class="reason-title">Sprawdzone materiały</div>
+          <p class="reason-text">Współpracujemy tylko ze sprawdzonymi producentami. Używamy materiałów wysokiej jakości, które zapewniają długotrwałe użytkowanie.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proces">
+  <div class="process-header reveal">
+    <div class="section-label">Jak pracujemy</div>
+    <h2 class="section-title">Prosty <span>proces</span> – pewny efekt</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="process-step-num"><span>1</span></div>
+      <div class="process-step-title">Kontakt</div>
+      <p class="process-step-text">Zadzwoń lub napisz. Omówimy Twoje potrzeby i umówimy się na bezpłatny pomiar.</p>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.1s">
+      <div class="process-step-num"><span>2</span></div>
+      <div class="process-step-title">Pomiar & Wycena</div>
+      <p class="process-step-text">Przyjeżdżamy na miejsce, robimy dokładne pomiary i przygotowujemy bezpłatną wycenę.</p>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.2s">
+      <div class="process-step-num"><span>3</span></div>
+      <div class="process-step-title">Realizacja</div>
+      <p class="process-step-text">Fachowy montaż w uzgodnionym terminie. Pracujemy szybko, schludnie i precyzyjnie.</p>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.3s">
+      <div class="process-step-num"><span>4</span></div>
+      <div class="process-step-title">Odbiór & Gwarancja</div>
+      <p class="process-step-text">Odbiór z klientem, instruktaż obsługi i gwarancja. Jesteśmy osiągalni w razie pytań.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="kontakt">
+  <div class="contact-info">
+    <div class="section-label reveal">Kontakt</div>
+    <h2 class="section-title reveal">Skontaktuj<br><span>się z nami</span></h2>
+    <div class="contact-details">
+      <div class="contact-item reveal">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-title">Telefon</div>
+          <div class="contact-item-value"><a href="tel:509055250">509 055 250</a></div>
+          <div class="contact-item-sub">Dostępni pn–pt 7:00–18:00, sob 8:00–14:00</div>
+        </div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-title">Adres</div>
+          <div class="contact-item-value">ul. Święciechowska 16</div>
+          <div class="contact-item-sub">64-100 Lasocice</div>
+        </div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="contact-icon">🗺️</div>
+        <div>
+          <div class="contact-item-title">Obszar działania</div>
+          <div class="contact-item-value">Leszno i okolice</div>
+          <div class="contact-item-sub">Dojazd na teren całego regionu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap reveal">
+    <div class="form-title">Bezpłatna wycena</div>
+    <p class="form-subtitle">Wypełnij formularz – oddzwonimy w ciągu 24 godzin.</p>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Imię i nazwisko</label>
+        <input type="text" placeholder="Jan Kowalski" />
+      </div>
+      <div class="form-group">
+        <label>Numer telefonu</label>
+        <input type="tel" placeholder="509 000 000" />
+      </div>
+      <div class="form-group full">
+        <label>Usługa</label>
+        <select>
+          <option value="" disabled selected>Wybierz usługę...</option>
+          <option>Montaż okien</option>
+          <option>Montaż drzwi</option>
+          <option>Montaż rolet / żaluzji</option>
+          <option>Serwis i naprawa</option>
+          <option>Pomiar i wycena</option>
+          <option>Inne</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Lokalizacja</label>
+        <input type="text" placeholder="Miasto / miejscowość" />
+      </div>
+      <div class="form-group full">
+        <label>Opis zlecenia</label>
+        <textarea placeholder="Opisz czego potrzebujesz, np. wymiana 4 okien w domu jednorodzinnym..."></textarea>
+      </div>
+    </div>
+    <button class="form-submit" onclick="handleForm(this)">Wyślij zapytanie →</button>
+  </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+  <div>
+    <div class="map-info-title reveal">Gdzie<br>nas <span>znajdziesz</span></div>
+    <p class="map-info-text reveal">Nasza siedziba mieści się w Lasocicach, skąd obsługujemy klientów z Leszna i całego regionu.</p>
+    <div class="map-hours reveal">
+      <div class="map-hour-row"><span>Poniedziałek – Piątek</span><span>7:00 – 18:00</span></div>
+      <div class="map-hour-row today"><span>Sobota ★</span><span>8:00 – 14:00</span></div>
+      <div class="map-hour-row"><span>Niedziela</span><span>Nieczynne</span></div>
+    </div>
+  </div>
+  <iframe
+    class="map-embed reveal"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5!2d16.5635!3d51.8380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDUwJzE2LjgiTiAxNsKwMzMnNDguNiJF!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#top" class="footer-logo">
+        <div class="nav-logo-icon">ET</div>
+        <div>
+          <div class="nav-logo-text">EMKA <span>TEAM</span></div>
+          <div class="nav-logo-sub">Windows Installation</div>
+        </div>
+      </a>
+      <p class="footer-desc">Profesjonalny montaż, serwis i naprawa okien, drzwi oraz rolet. Działamy na terenie Leszna i okolic z siedzibą w Lasocicach.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Usługi</div>
+      <ul class="footer-links">
+        <li><a href="#uslugi">Montaż okien</a></li>
+        <li><a href="#uslugi">Montaż drzwi</a></li>
+        <li><a href="#uslugi">Rolety i żaluzje</a></li>
+        <li><a href="#uslugi">Serwis i naprawy</a></li>
+        <li><a href="#uslugi">Pomiary i doradztwo</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontakt</div>
+      <ul class="footer-links">
+        <li><a href="tel:509055250">📞 509 055 250</a></li>
+        <li><a href="#kontakt">📍 Święciechowska 16</a></li>
+        <li><a href="#kontakt">64-100 Lasocice</a></li>
+        <li><a href="#kontakt">Bezpłatna wycena</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 <span class="footer-accent">EMKA TEAM</span> – Wszelkie prawa zastrzeżone.</div>
+    <div class="footer-copy">Lasocice · Leszno i okolice</div>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .service-card, .reason').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(2)';
+      ring.style.transform += ' scale(1.5)';
+      ring.style.opacity = '1';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.opacity = '0.5';
+    });
+  });
+
+  // Navbar scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+    document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form handler
+  function handleForm(btn) {
+    btn.textContent = '✓ Wysłano! Oddzwonimy wkrótce';
+    btn.style.background = '#2ecc71';
+    btn.style.color = '#fff';
+    btn.disabled = true;
+  }
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = '';
+          if (a.getAttribute('href') === '#' + e.target.id) a.style.color = 'var(--accent)';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
