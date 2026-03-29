@@ -11,16 +11,18 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --navy: #0a0f1e;
-      --navy2: #111827;
-      --steel: #1e2d45;
-      --accent: #e8a020;
-      --accent2: #f5c045;
-      --silver: #9baab8;
-      --light: #d8e4ef;
-      --white: #f4f8fc;
+      --navy: #090315;
+      --navy2: #0d0820;
+      --steel: #1a1630;
+      --accent: #30E1EA;
+      --accent2: #73EFED;
+      --accent-dark: #128CB6;
+      --silver: #B2CBCA;
+      --light: #8AFFED;
+      --white: #FFFFFF;
+      --charcoal: #414C54;
       --glass: rgba(255,255,255,0.05);
-      --glow: rgba(232, 160, 32, 0.25);
+      --glow: rgba(48, 225, 234, 0.25);
     }
 
     html { scroll-behavior: smooth; }
@@ -63,29 +65,34 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 4rem;
-      background: rgba(10, 15, 30, 0.85);
+      background: rgba(9, 3, 21, 0.85);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: all 0.4s ease;
     }
     nav.scrolled {
       padding: 0.8rem 4rem;
-      background: rgba(10, 15, 30, 0.97);
+      background: rgba(9, 3, 21, 0.97);
     }
     .nav-logo {
       display: flex; align-items: center; gap: 0.8rem;
       text-decoration: none;
     }
     .nav-logo-icon {
-      width: 42px; height: 42px;
-      background: var(--accent);
-      clip-path: polygon(0 0, 75% 0, 100% 25%, 100% 100%, 25% 100%, 0 75%);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      color: var(--navy);
-      letter-spacing: 0.05em;
-    }
+      width: 60px; 
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+	}
+	
+	.logo-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+	}
+
     .nav-logo-text {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.5rem;
@@ -146,9 +153,9 @@
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(30,45,70,0.6) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,160,32,0.08) 0%, transparent 60%),
-        linear-gradient(135deg, var(--navy) 0%, #0d1628 60%, #162035 100%);
+        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(26,22,48,0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(48,225,234,0.08) 0%, transparent 60%),
+        linear-gradient(135deg, var(--navy) 0%, #0d0820 60%, #1a1630 100%);
     }
     .hero-grid {
       position: absolute; inset: 0; z-index: 0;
@@ -167,8 +174,8 @@
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 0.6rem;
-      background: rgba(232,160,32,0.1);
-      border: 1px solid rgba(232,160,32,0.25);
+      background: rgba(48,225,234,0.1);
+      border: 1px solid rgba(48,225,234,0.25);
       padding: 0.45rem 1rem;
       font-size: 0.68rem;
       font-weight: 700;
@@ -233,7 +240,7 @@
     .btn-primary:hover {
       background: var(--accent2);
       transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(232,160,32,0.3);
+      box-shadow: 0 15px 40px rgba(48,225,234,0.3);
     }
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 0.5rem;
@@ -298,11 +305,11 @@
     .window-graphic {
       position: absolute;
       inset: 40px;
-      border: 2px solid rgba(232,160,32,0.3);
-      background: linear-gradient(135deg, rgba(30,45,70,0.6) 0%, rgba(15,25,45,0.8) 100%);
+      border: 2px solid rgba(48,225,234,0.3);
+      background: linear-gradient(135deg, rgba(26,22,48,0.6) 0%, rgba(13,8,32,0.8) 100%);
       box-shadow:
-        inset 0 0 60px rgba(232,160,32,0.05),
-        0 0 80px rgba(232,160,32,0.1),
+        inset 0 0 60px rgba(48,225,234,0.05),
+        0 0 80px rgba(48,225,234,0.1),
         0 40px 100px rgba(0,0,0,0.5);
     }
     .window-inner {
@@ -313,12 +320,20 @@
       gap: 10px;
     }
     .window-pane {
-      border: 1px solid rgba(232,160,32,0.15);
+      border: 1px solid rgba(48,225,234,0.15);
       background:
         linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 100%);
       position: relative;
       overflow: hidden;
+      background-size: cover;
+      background-position: center;
     }
+    /* Tutaj wrzuć swoje zdjęcia realizacji */
+    .window-pane:nth-child(1) { background-image: url('zdjecie1.png'); }
+    .window-pane:nth-child(2) { background-image: url('zdjecie2.png'); }
+    .window-pane:nth-child(3) { background-image: url('zdjecie3.png'); }
+    .window-pane:nth-child(4) { background-image: url('zdjecie4.png'); }
+    
     .window-pane::after {
       content: '';
       position: absolute;
@@ -360,7 +375,7 @@
 
     .hero-ring {
       position: absolute;
-      border: 1px solid rgba(232,160,32,0.1);
+      border: 1px solid rgba(48,225,234,0.1);
       border-radius: 50%;
       animation: rotateSlow 20s linear infinite;
     }
@@ -384,7 +399,7 @@
     .float-tag {
       position: absolute;
       background: var(--navy2);
-      border: 1px solid rgba(232,160,32,0.2);
+      border: 1px solid rgba(48,225,234,0.2);
       padding: 0.7rem 1.2rem;
       font-size: 0.72rem;
       font-weight: 600;
@@ -471,7 +486,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(232,160,32,0.07) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(48,225,234,0.07) 0%, transparent 60%);
       opacity: 0;
       transition: opacity 0.4s;
     }
@@ -500,7 +515,7 @@
       letter-spacing: -0.02em;
       transition: color 0.4s;
     }
-    .service-card:hover .service-num { color: rgba(232,160,32,0.06); }
+    .service-card:hover .service-num { color: rgba(48,225,234,0.06); }
     .service-icon {
       font-size: 2.5rem;
       margin-bottom: 1.5rem;
@@ -648,7 +663,7 @@
       width: 100px; height: 100px;
       margin: 0 auto 2rem;
       background: var(--steel);
-      border: 1px solid rgba(232,160,32,0.2);
+      border: 1px solid rgba(48,225,234,0.2);
       display: flex; align-items: center; justify-content: center;
       position: relative;
       clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
@@ -680,169 +695,148 @@
       line-height: 1.7;
     }
 
-    /* CONTACT */
-    .contact {
+    /* REALIZACJE */
+    .realizacje {
       padding: 8rem 8rem;
       background: var(--navy);
+    }
+    .realizacje-header { text-align: center; margin-bottom: 5rem; }
+    .realizacje-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
     }
-    .contact-info { }
-    .contact-details { margin-top: 3rem; display: flex; flex-direction: column; gap: 2.5rem; }
-    .contact-item {
-      display: flex; gap: 1.5rem; align-items: flex-start;
-    }
-    .contact-icon {
-      width: 52px; height: 52px; flex-shrink: 0;
-      background: var(--steel);
-      border: 1px solid rgba(232,160,32,0.15);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .contact-item:hover .contact-icon {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .contact-item-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.4rem;
-    }
-    .contact-item-value {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--white);
-    }
-    .contact-item-value a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .contact-item-value a:hover { color: var(--accent); }
-    .contact-item-sub {
-      font-size: 0.78rem;
-      color: var(--silver);
-      margin-top: 0.2rem;
-    }
-
-    /* CONTACT FORM */
-    .contact-form-wrap {
+    .realizacja-card {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
       background: var(--steel);
       border: 1px solid rgba(255,255,255,0.06);
-      padding: 3rem;
-      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
     }
-    .contact-form-wrap::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), transparent);
+    .realizacja-card:hover { transform: scale(1.03); }
+    .realizacja-card:hover .realizacja-overlay { opacity: 1; }
+    .realizacja-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
     }
-    .form-title {
+    .realizacja-card:hover .realizacja-img { transform: scale(1.1); }
+    .realizacja-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(9,3,21,0.95) 0%, transparent 60%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .realizacja-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--white);
       margin-bottom: 0.5rem;
     }
-    .form-subtitle { font-size: 0.85rem; color: var(--silver); margin-bottom: 2rem; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-    .form-group.full { grid-column: 1 / -1; }
-    label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+    .realizacja-desc {
+      font-size: 0.85rem;
       color: var(--silver);
+      line-height: 1.6;
     }
-    input, textarea, select {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--white);
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.9rem;
-      padding: 0.9rem 1rem;
-      outline: none;
-      transition: border-color 0.3s, background 0.3s;
-      width: 100%;
-      -webkit-appearance: none;
+
+    /* CONTACT */
+    .contact {
+      padding: 8rem 8rem;
+      background: var(--navy2);
     }
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--accent);
-      background: rgba(232,160,32,0.04);
+    .contact-header { text-align: center; margin-bottom: 4rem; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    input::placeholder, textarea::placeholder { color: rgba(155,170,184,0.5); }
-    textarea { resize: vertical; min-height: 110px; }
-    select option { background: var(--navy2); }
-    .form-submit {
-      margin-top: 1.5rem;
-      width: 100%;
+    .contact-card {
+      background: var(--steel);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.3s;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
       background: var(--accent);
-      color: var(--navy);
-      font-family: 'Barlow', sans-serif;
-      font-weight: 800;
-      font-size: 0.82rem;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .contact-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(48,225,234,0.3);
+    }
+    .contact-card:hover::before { transform: scaleX(1); }
+    .contact-icon {
+      width: 80px; height: 80px;
+      margin: 0 auto 2rem;
+      background: rgba(48,225,234,0.1);
+      border: 1px solid rgba(48,225,234,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .contact-card:hover .contact-icon {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+    .contact-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 1.1rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      color: var(--accent);
+      margin-bottom: 1rem;
     }
-    .form-submit:hover {
-      background: var(--accent2);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(232,160,32,0.25);
+    .contact-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      word-break: break-word;
+    }
+    .contact-value a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-value a:hover { color: var(--accent); }
+    .contact-sub {
+      font-size: 0.82rem;
+      color: var(--silver);
+      line-height: 1.5;
     }
 
     /* MAP SECTION */
     .map-section {
-      background: var(--navy2);
-      padding: 5rem 8rem;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 5rem;
-      align-items: center;
+      background: var(--navy);
+      padding: 8rem 8rem;
     }
-    .map-info-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      color: var(--white);
-      letter-spacing: 0.05em;
-      margin-bottom: 1rem;
-    }
-    .map-info-title span { color: var(--accent); }
-    .map-info-text {
-      font-size: 0.9rem;
-      color: var(--silver);
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-    .map-hours { display: flex; flex-direction: column; gap: 0.6rem; }
-    .map-hour-row {
-      display: flex; justify-content: space-between;
-      font-size: 0.83rem;
-      color: var(--silver);
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .map-hour-row span:first-child { font-weight: 600; color: var(--light); }
-    .map-hour-row.today { color: var(--accent); }
-    .map-hour-row.today span:first-child { color: var(--accent); }
+    .map-header { text-align: center; margin-bottom: 4rem; }
     .map-embed {
-      width: 100%; height: 380px;
-      border: 1px solid rgba(255,255,255,0.06);
+      width: 100%; 
+      height: 500px;
+      border: 2px solid rgba(48,225,234,0.2);
       filter: grayscale(30%) brightness(0.85);
       transition: filter 0.4s;
     }
@@ -850,7 +844,7 @@
 
     /* FOOTER */
     footer {
-      background: #060b15;
+      background: #040210;
       border-top: 1px solid rgba(255,255,255,0.05);
       padding: 4rem 8rem 2rem;
     }
@@ -898,7 +892,7 @@
     }
     .footer-copy {
       font-size: 0.78rem;
-      color: rgba(155,170,184,0.5);
+      color: rgba(178,203,202,0.5);
     }
     .footer-accent { color: var(--accent); }
 
@@ -926,7 +920,7 @@
       position: fixed; bottom: 2.5rem; left: 2.5rem;
       display: flex; align-items: center; gap: 0.8rem;
       background: var(--steel);
-      border: 1px solid rgba(232,160,32,0.25);
+      border: 1px solid rgba(48,225,234,0.25);
       padding: 0.8rem 1.4rem;
       z-index: 80;
       text-decoration: none;
@@ -975,9 +969,11 @@
       .process { padding: 5rem 2.5rem; }
       .process-grid { grid-template-columns: 1fr 1fr; }
       .process-grid::before { display: none; }
-      .contact { padding: 5rem 2.5rem; grid-template-columns: 1fr; gap: 3rem; }
-      .map-section { padding: 4rem 2.5rem; grid-template-columns: 1fr; gap: 3rem; }
-      .form-grid { grid-template-columns: 1fr; }
+      .realizacje { padding: 5rem 2.5rem; }
+      .realizacje-grid { grid-template-columns: 1fr; }
+      .contact { padding: 5rem 2.5rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .map-section { padding: 4rem 2.5rem; }
       footer { padding: 3rem 2.5rem 2rem; }
       .footer-top { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
@@ -1007,7 +1003,9 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="#top" class="nav-logo">
-    <div class="nav-logo-icon">ET</div>
+    <div class="nav-logo-icon">
+		<img src="ema.png" alt="Emka Team Logo" class="logo-img">
+	</div>
     <div>
       <div class="nav-logo-text">EMKA <span>TEAM</span></div>
       <div class="nav-logo-sub">Okna & Drzwi</div>
@@ -1017,6 +1015,7 @@
     <li><a href="#uslugi">Usługi</a></li>
     <li><a href="#dlaczego">O Nas</a></li>
     <li><a href="#proces">Proces</a></li>
+    <li><a href="#realizacje">Realizacje</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
     <li><a href="tel:509055250" class="nav-cta">509 055 250</a></li>
   </ul>
@@ -1041,7 +1040,7 @@
     </p>
     <div class="hero-actions">
       <a href="#kontakt" class="btn-primary">
-        Bezpłatna wycena
+        Skontaktuj się
         <span>→</span>
       </a>
       <a href="tel:509055250" class="btn-secondary">
@@ -1051,7 +1050,7 @@
     </div>
     <div class="hero-stats">
       <div class="stat">
-        <div class="stat-num">10+</div>
+        <div class="stat-num">20+</div>
         <div class="stat-label">Lat doświadczenia</div>
       </div>
       <div class="stat">
@@ -1210,7 +1209,7 @@
         <div class="reason-num">01</div>
         <div class="reason-content">
           <div class="reason-title">Doświadczony zespół</div>
-          <p class="reason-text">Ponad 10 lat na rynku. Nasi monterzy posiadają certyfikaty i niezbędne uprawnienia. Każda praca wykonywana jest z najwyższą starannością.</p>
+          <p class="reason-text">Ponad 20 lat na rynku. Posiadamy certyfikaty i niezbędne uprawnienia. Każda praca wykonywana jest z najwyższą starannością.</p>
         </div>
       </div>
       <div class="reason reveal">
@@ -1238,7 +1237,7 @@
   </div>
 </section>
 
-<!-- PROCESS -->
+<!-- PROCES -->
 <section class="process" id="proces">
   <div class="process-header reveal">
     <div class="section-label">Jak pracujemy</div>
@@ -1268,94 +1267,108 @@
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="kontakt">
-  <div class="contact-info">
-    <div class="section-label reveal">Kontakt</div>
-    <h2 class="section-title reveal">Skontaktuj<br><span>się z nami</span></h2>
-    <div class="contact-details">
-      <div class="contact-item reveal">
-        <div class="contact-icon">📞</div>
-        <div>
-          <div class="contact-item-title">Telefon</div>
-          <div class="contact-item-value"><a href="tel:509055250">509 055 250</a></div>
-          <div class="contact-item-sub">Dostępni pn–pt 7:00–18:00, sob 8:00–14:00</div>
-        </div>
-      </div>
-      <div class="contact-item reveal">
-        <div class="contact-icon">📍</div>
-        <div>
-          <div class="contact-item-title">Adres</div>
-          <div class="contact-item-value">ul. Święciechowska 16</div>
-          <div class="contact-item-sub">64-100 Lasocice</div>
-        </div>
-      </div>
-      <div class="contact-item reveal">
-        <div class="contact-icon">🗺️</div>
-        <div>
-          <div class="contact-item-title">Obszar działania</div>
-          <div class="contact-item-value">Leszno i okolice</div>
-          <div class="contact-item-sub">Dojazd na teren całego regionu</div>
-        </div>
-      </div>
-    </div>
+<!-- REALIZACJE -->
+<section class="realizacje" id="realizacje">
+  <div class="realizacje-header reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Nasze <span>realizacje</span></h2>
   </div>
-
-  <div class="contact-form-wrap reveal">
-    <div class="form-title">Bezpłatna wycena</div>
-    <p class="form-subtitle">Wypełnij formularz – oddzwonimy w ciągu 24 godzin.</p>
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Imię i nazwisko</label>
-        <input type="text" placeholder="Jan Kowalski" />
-      </div>
-      <div class="form-group">
-        <label>Numer telefonu</label>
-        <input type="tel" placeholder="509 000 000" />
-      </div>
-      <div class="form-group full">
-        <label>Usługa</label>
-        <select>
-          <option value="" disabled selected>Wybierz usługę...</option>
-          <option>Montaż okien</option>
-          <option>Montaż drzwi</option>
-          <option>Montaż rolet / żaluzji</option>
-          <option>Serwis i naprawa</option>
-          <option>Pomiar i wycena</option>
-          <option>Inne</option>
-        </select>
-      </div>
-      <div class="form-group full">
-        <label>Lokalizacja</label>
-        <input type="text" placeholder="Miasto / miejscowość" />
-      </div>
-      <div class="form-group full">
-        <label>Opis zlecenia</label>
-        <textarea placeholder="Opisz czego potrzebujesz, np. wymiana 4 okien w domu jednorodzinnym..."></textarea>
+  <div class="realizacje-grid">
+    <!-- Tutaj wrzuć swoje zdjęcia realizacji -->
+    <div class="realizacja-card reveal">
+      <img src="realizacja1.jpg" alt="Realizacja 1" class="realizacja-img">
+      <div class="realizacja-overlay">
+        <div class="realizacja-title">Montaż okien PCV</div>
+        <div class="realizacja-desc">Dom jednorodzinny – kompleksowa wymiana wszystkich okien</div>
       </div>
     </div>
-    <button class="form-submit" onclick="handleForm(this)">Wyślij zapytanie →</button>
+    
+    <div class="realizacja-card reveal" style="transition-delay:0.1s">
+      <img src="realizacja2.jpg" alt="Realizacja 2" class="realizacja-img">
+      <div class="realizacja-overlay">
+        <div class="realizacja-title">Drzwi wejściowe</div>
+        <div class="realizacja-desc">Montaż drzwi antywłamaniowych z systemem multipoint</div>
+      </div>
+    </div>
+    
+    <div class="realizacja-card reveal" style="transition-delay:0.2s">
+      <img src="realizacja3.jpg" alt="Realizacja 3" class="realizacja-img">
+      <div class="realizacja-overlay">
+        <div class="realizacja-title">Rolety zewnętrzne</div>
+        <div class="realizacja-desc">Instalacja rolet z napędem elektrycznym i sterowaniem</div>
+      </div>
+    </div>
+    
+    <div class="realizacja-card reveal" style="transition-delay:0.3s">
+      <img src="realizacja4.jpg" alt="Realizacja 4" class="realizacja-img">
+      <div class="realizacja-overlay">
+        <div class="realizacja-title">Okna aluminiowe</div>
+        <div class="realizacja-desc">Renowacja i wymiana zabytkowych okien drewnianych</div>
+      </div>
+    </div>
+    
+    <div class="realizacja-card reveal" style="transition-delay:0.4s">
+      <img src="realizacja5.jpg" alt="Realizacja 5" class="realizacja-img">
+      <div class="realizacja-overlay">
+        <div class="realizacja-title">Drzwi balkonowe</div>
+        <div class="realizacja-desc">Drzwi tarasowe HST z podnoszonym skrzydłem</div>
+      </div>
+    </div>
+    
+    <div class="realizacja-card reveal" style="transition-delay:0.5s">
+      <img src="realizacja6.jpg" alt="Realizacja 6" class="realizacja-img">
+      <div class="realizacja-overlay">
+        <div class="realizacja-title">Kompleksowy projekt</div>
+        <div class="realizacja-desc">Okna, drzwi i rolety – pełna modernizacja budynku</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- MAP -->
-<div class="map-section">
-  <div>
-    <div class="map-info-title reveal">Gdzie<br>nas <span>znajdziesz</span></div>
-    <p class="map-info-text reveal">Nasza siedziba mieści się w Lasocicach, skąd obsługujemy klientów z Leszna i całego regionu.</p>
-    <div class="map-hours reveal">
-      <div class="map-hour-row"><span>Poniedziałek – Piątek</span><span>7:00 – 18:00</span></div>
-      <div class="map-hour-row today"><span>Sobota ★</span><span>8:00 – 14:00</span></div>
-      <div class="map-hour-row"><span>Niedziela</span><span>Nieczynne</span></div>
+<!-- CONTACT -->
+<section class="contact" id="kontakt">
+  <div class="contact-header reveal">
+    <div class="section-label">Kontakt</div>
+    <h2 class="section-title">Skontaktuj <span>się z nami</span></h2>
+  </div>
+  
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <div class="contact-icon">📞</div>
+      <div class="contact-title">Telefon</div>
+      <div class="contact-value"><a href="tel:509055250">509 055 250</a></div>
+      <div class="contact-sub">Zadzwoń</div>
+    </div>
+    
+    <div class="contact-card reveal" style="transition-delay:0.1s">
+      <div class="contact-icon">📍</div>
+      <div class="contact-title">Adres</div>
+      <div class="contact-value">ul. Święciechowska 16</div>
+      <div class="contact-sub">64-100 Lasocice</div>
+    </div>
+    
+    <div class="contact-card reveal" style="transition-delay:0.2s">
+      <div class="contact-icon">✉️</div>
+      <div class="contact-title">E-mail</div>
+      <div class="contact-value"><a href="mailto:biuro.emkateam@gmail.com">biuro.emkateam@gmail.com</a></div>
+      <div class="contact-sub">Odpowiadamy jak najszybciej</div>
     </div>
   </div>
-  <iframe
-    class="map-embed reveal"
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5!2d16.5635!3d51.8380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDUwJzE2LjgiTiAxNsKwMzMnNDguNiJF!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
+</section>
+
+<div class="map-section">
+  <div class="map-header reveal">
+    <div class="section-label">Lokalizacja</div>
+    <h2 class="section-title">Gdzie nas <span>znajdziesz</span></h2>
+  </div>
+  <iframe 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2465.890290111362!2d16.48352377638714!3d51.82643457188763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470597128ceaf645%3A0x67001c6bcf80b9a7!2sEMKA%20TEAM%20WINDOWS%20INSTALLATION!5e0!3m2!1spl!2spl!4v1774806677164!5m2!1spl!2spl0" 
+  class="map-embed reveal" 
+  style="border:0; width:100%; height:450px;" 
+  allowfullscreen="" 
+  loading="lazy" 
+  referrerpolicy="no-referrer-when-downgrade">
+</iframe>
 </div>
 
 <!-- FOOTER -->
@@ -1363,13 +1376,15 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a href="#top" class="footer-logo">
-        <div class="nav-logo-icon">ET</div>
+        <div class="nav-logo-icon">
+			<img src="ema.png" alt="Emka Team Logo" class="logo-img">
+		</div>
         <div>
           <div class="nav-logo-text">EMKA <span>TEAM</span></div>
           <div class="nav-logo-sub">Windows Installation</div>
         </div>
       </a>
-      <p class="footer-desc">Profesjonalny montaż, serwis i naprawa okien, drzwi oraz rolet. Działamy na terenie Leszna i okolic z siedzibą w Lasocicach.</p>
+      <p class="footer-desc">Profesjonalny montaż, serwis i naprawa okien, drzwi oraz rolet. Działamy na terenie całego regionu z siedzibą w Lasocicach.</p>
     </div>
     <div>
       <div class="footer-col-title">Usługi</div>
@@ -1385,15 +1400,15 @@
       <div class="footer-col-title">Kontakt</div>
       <ul class="footer-links">
         <li><a href="tel:509055250">📞 509 055 250</a></li>
+        <li><a href="mailto:biuro.emkateam@gmail.com">✉️ biuro.emkateam@gmail.com</a></li>
         <li><a href="#kontakt">📍 Święciechowska 16</a></li>
         <li><a href="#kontakt">64-100 Lasocice</a></li>
-        <li><a href="#kontakt">Bezpłatna wycena</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2025 <span class="footer-accent">EMKA TEAM</span> – Wszelkie prawa zastrzeżone.</div>
-    <div class="footer-copy">Lasocice · Leszno i okolice</div>
+    <div class="footer-copy">Lasocice · Wielkopolska</div>
   </div>
 </footer>
 
@@ -1413,7 +1428,7 @@
     requestAnimationFrame(animRing);
   }
   animRing();
-  document.querySelectorAll('a, button, .service-card, .reason').forEach(el => {
+  document.querySelectorAll('a, button, .service-card, .reason, .realizacja-card, .contact-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.transform += ' scale(2)';
       ring.style.transform += ' scale(1.5)';
@@ -1438,14 +1453,6 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Form handler
-  function handleForm(btn) {
-    btn.textContent = '✓ Wysłano! Oddzwonimy wkrótce';
-    btn.style.background = '#2ecc71';
-    btn.style.color = '#fff';
-    btn.disabled = true;
-  }
 
   // Active nav highlight
   const sections = document.querySelectorAll('section[id], div[id]');
