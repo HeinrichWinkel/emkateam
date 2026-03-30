@@ -9,993 +9,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --navy: #090315;
-      --navy2: #0d0820;
-      --steel: #1a1630;
-      --accent: #30E1EA;
-      --accent2: #73EFED;
-      --accent-dark: #128CB6;
-      --silver: #B2CBCA;
-      --light: #8AFFED;
-      --white: #FFFFFF;
-      --charcoal: #414C54;
-      --glass: rgba(255,255,255,0.05);
-      --glow: rgba(48, 225, 234, 0.25);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Barlow', sans-serif;
-      background: var(--navy);
-      color: var(--white);
-      overflow-x: hidden;
-      cursor: none;
-    }
-
-    /* CUSTOM CURSOR */
-    .cursor {
-      width: 12px; height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9999;
-      transition: transform 0.15s ease;
-      mix-blend-mode: screen;
-    }
-    .cursor-ring {
-      width: 40px; height: 40px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9998;
-      opacity: 0.5;
-      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
-    }
-
-    /* SCROLLBAR */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--navy); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 4rem;
-      background: rgba(9, 3, 21, 0.85);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: all 0.4s ease;
-    }
-    nav.scrolled {
-      padding: 0.8rem 4rem;
-      background: rgba(9, 3, 21, 0.97);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 0.8rem;
-      text-decoration: none;
-    }
-    .nav-logo-icon {
-      width: 60px; 
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-	}
-	
-	.logo-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-	}
-
-    .nav-logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: 0.12em;
-      color: var(--white);
-      line-height: 1;
-    }
-    .nav-logo-text span { color: var(--accent); }
-    .nav-logo-sub {
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--silver);
-      text-transform: uppercase;
-    }
-    .nav-links {
-      display: flex; gap: 2.5rem; list-style: none;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--silver);
-      position: relative;
-      transition: color 0.3s;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute;
-      bottom: -4px; left: 0; width: 0; height: 1px;
-      background: var(--accent);
-      transition: width 0.35s ease;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-cta {
-      background: var(--accent);
-      color: var(--navy) !important;
-      padding: 0.55rem 1.4rem;
-      font-weight: 700 !important;
-      font-size: 0.75rem !important;
-      letter-spacing: 0.15em !important;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      transition: background 0.3s, color 0.3s !important;
-    }
-    .nav-cta:hover { background: var(--accent2) !important; }
-    .nav-cta::after { display: none !important; }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 70% 50%, rgba(26,22,48,0.6) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(48,225,234,0.08) 0%, transparent 60%),
-        linear-gradient(135deg, var(--navy) 0%, #0d0820 60%, #1a1630 100%);
-    }
-    .hero-grid {
-      position: absolute; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, transparent 100%);
-    }
-
-    .hero-left {
-      display: flex; flex-direction: column;
-      justify-content: center;
-      padding: 10rem 4rem 6rem 8rem;
-      position: relative; z-index: 2;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: rgba(48,225,234,0.1);
-      border: 1px solid rgba(48,225,234,0.25);
-      padding: 0.45rem 1rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 2rem;
-      width: fit-content;
-      animation: fadeSlideUp 0.8s ease both;
-    }
-    .hero-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.5); }
-    }
-
-    .hero-h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 8vw, 7.5rem);
-      line-height: 0.92;
-      letter-spacing: 0.04em;
-      animation: fadeSlideUp 0.8s 0.15s ease both;
-    }
-    .hero-h1 .line1 { display: block; color: var(--white); }
-    .hero-h1 .line2 { display: block; color: var(--accent); }
-    .hero-h1 .line3 { display: block; color: var(--silver); font-size: 0.55em; letter-spacing: 0.18em; }
-
-    .hero-desc {
-      margin-top: 2rem;
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--silver);
-      max-width: 420px;
-      animation: fadeSlideUp 0.8s 0.3s ease both;
-    }
-
-    .hero-actions {
-      margin-top: 2.5rem;
-      display: flex; gap: 1rem; align-items: center;
-      animation: fadeSlideUp 0.8s 0.45s ease both;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.7rem;
-      background: var(--accent);
-      color: var(--navy);
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 1rem 2rem;
-      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-    }
-    .btn-primary:hover {
-      background: var(--accent2);
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(48,225,234,0.3);
-    }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      color: var(--silver);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .btn-secondary:hover { color: var(--accent); }
-    .btn-arrow {
-      width: 28px; height: 28px;
-      border: 1px solid currentColor;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem;
-      transition: transform 0.3s;
-    }
-    .btn-secondary:hover .btn-arrow { transform: translateX(4px); }
-
-    .hero-stats {
-      margin-top: 4rem;
-      display: flex; gap: 2.5rem;
-      animation: fadeSlideUp 0.8s 0.6s ease both;
-    }
-    .stat { position: relative; }
-    .stat::before {
-      content: '';
-      position: absolute;
-      left: -1.2rem; top: 50%;
-      transform: translateY(-50%);
-      width: 1px; height: 60%;
-      background: rgba(255,255,255,0.1);
-    }
-    .stat:first-child::before { display: none; }
-    .stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--silver);
-      margin-top: 0.2rem;
-    }
-
-    .hero-right {
-      position: relative; z-index: 2;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero-visual {
-      position: relative;
-      width: 520px; height: 520px;
-      animation: fadeSlideUp 0.8s 0.2s ease both;
-    }
-    .window-graphic {
-      position: absolute;
-      inset: 40px;
-      border: 2px solid rgba(48,225,234,0.3);
-      background: linear-gradient(135deg, rgba(26,22,48,0.6) 0%, rgba(13,8,32,0.8) 100%);
-      box-shadow:
-        inset 0 0 60px rgba(48,225,234,0.05),
-        0 0 80px rgba(48,225,234,0.1),
-        0 40px 100px rgba(0,0,0,0.5);
-    }
-    .window-inner {
-      position: absolute;
-      inset: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .window-pane {
-      border: 1px solid rgba(48,225,234,0.15);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 100%);
-      position: relative;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-    }
-    /* Tutaj wrzuć swoje zdjęcia realizacji */
-    .window-pane:nth-child(1) { background-image: url('zdjecie1.png'); }
-    .window-pane:nth-child(2) { background-image: url('zdjecie2.png'); }
-    .window-pane:nth-child(3) { background-image: url('zdjecie3.png'); }
-    .window-pane:nth-child(4) { background-image: url('zdjecie4.png'); }
-    
-    .window-pane::after {
-      content: '';
-      position: absolute;
-      top: -100%; left: -100%;
-      width: 300%; height: 300%;
-      background: linear-gradient(
-        135deg, transparent 30%,
-        rgba(255,255,255,0.04) 50%,
-        transparent 70%
-      );
-      animation: shimmer 4s infinite;
-    }
-    .window-pane:nth-child(2)::after { animation-delay: 1s; }
-    .window-pane:nth-child(3)::after { animation-delay: 2s; }
-    .window-pane:nth-child(4)::after { animation-delay: 3s; }
-    @keyframes shimmer {
-      0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
-      100% { transform: translateX(50%) translateY(50%) rotate(0deg); }
-    }
-    .window-handle {
-      position: absolute; right: -2px; top: 50%;
-      transform: translateY(-50%);
-      width: 16px; height: 60px;
-      background: var(--accent);
-      border-radius: 8px 0 0 8px;
-      opacity: 0.8;
-    }
-    .window-corner {
-      position: absolute;
-      width: 20px; height: 20px;
-      border-color: var(--accent);
-      border-style: solid;
-      opacity: 0.6;
-    }
-    .wc-tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
-    .wc-tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
-    .wc-bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
-    .wc-br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
-
-    .hero-ring {
-      position: absolute;
-      border: 1px solid rgba(48,225,234,0.1);
-      border-radius: 50%;
-      animation: rotateSlow 20s linear infinite;
-    }
-    .hero-ring-1 { inset: -20px; }
-    .hero-ring-2 { inset: 0; animation-direction: reverse; animation-duration: 30s; }
-    .hero-ring::after {
-      content: '';
-      position: absolute;
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      top: -4px; left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 0 12px var(--accent);
-    }
-    @keyframes rotateSlow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .float-tag {
-      position: absolute;
-      background: var(--navy2);
-      border: 1px solid rgba(48,225,234,0.2);
-      padding: 0.7rem 1.2rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-    .float-tag-1 { top: 30px; left: 20px; animation: float1 6s ease-in-out infinite; }
-    .float-tag-2 { bottom: 40px; right: 10px; animation: float2 7s ease-in-out infinite; }
-    @keyframes float1 {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-    @keyframes float2 {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
-
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* SECTION BASE */
-    section { position: relative; overflow: hidden; }
-
-    .section-label {
-      display: inline-flex; align-items: center; gap: 0.8rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.2rem;
-    }
-    .section-label::before {
-      content: '';
-      width: 30px; height: 1px;
-      background: var(--accent);
-    }
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 0.95;
-      letter-spacing: 0.04em;
-      color: var(--white);
-    }
-    .section-title span { color: var(--accent); }
-
-    /* SERVICES */
-    .services {
-      padding: 8rem 8rem;
-      background: var(--navy2);
-    }
-    .services-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: end;
-      margin-bottom: 5rem;
-    }
-    .services-desc {
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--silver);
-      align-self: end;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-    }
-    .service-card {
-      background: var(--steel);
-      padding: 2.8rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-      cursor: pointer;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(48,225,234,0.07) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .service-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-    }
-    .service-card:hover { transform: translateY(-6px); }
-    .service-card:hover::before { opacity: 1; }
-    .service-card:hover::after { transform: scaleX(1); }
-    .service-card:hover .service-icon { color: var(--accent); }
-
-    .service-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 5rem;
-      line-height: 1;
-      color: rgba(255,255,255,0.04);
-      position: absolute;
-      top: 1rem; right: 1.5rem;
-      letter-spacing: -0.02em;
-      transition: color 0.4s;
-    }
-    .service-card:hover .service-num { color: rgba(48,225,234,0.06); }
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      display: block;
-      transition: color 0.3s;
-      color: var(--light);
-    }
-    .service-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 1rem;
-    }
-    .service-text {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--silver);
-    }
-    .service-features {
-      margin-top: 1.5rem;
-      list-style: none;
-      display: flex; flex-direction: column; gap: 0.5rem;
-    }
-    .service-features li {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      color: var(--silver);
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .service-features li::before {
-      content: '→';
-      color: var(--accent);
-      font-size: 0.8rem;
-    }
-
-    /* WHY US */
-    .whyus {
-      padding: 8rem 8rem;
-      background: var(--navy);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8rem;
-      align-items: center;
-    }
-    .whyus-visual {
-      position: relative;
-    }
-    .whyus-big-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 12rem;
-      line-height: 0.85;
-      color: rgba(255,255,255,0.03);
-      letter-spacing: -0.02em;
-      pointer-events: none;
-      user-select: none;
-    }
-    .whyus-card {
-      position: absolute;
-      background: var(--steel);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 2rem;
-    }
-    .whyus-card-1 { top: 5%; right: 0; width: 240px; }
-    .whyus-card-2 { bottom: 10%; left: 10%; width: 220px; }
-    .whyus-card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
-    .whyus-card-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    .whyus-card-text { font-size: 0.82rem; color: var(--silver); line-height: 1.6; }
-
-    .whyus-line {
-      width: 2px; height: 120px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      position: absolute;
-      left: 30%; top: 20%;
-    }
-
-    .reasons { display: flex; flex-direction: column; gap: 0; }
-    .reason {
-      padding: 2rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      display: flex; gap: 1.5rem; align-items: flex-start;
-      transition: padding-left 0.3s ease;
-      cursor: pointer;
-    }
-    .reason:hover { padding-left: 0.5rem; }
-    .reason:hover .reason-num { color: var(--accent); }
-    .reason-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      color: rgba(255,255,255,0.15);
-      line-height: 1;
-      transition: color 0.3s;
-      min-width: 2.5rem;
-    }
-    .reason-content {}
-    .reason-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.4rem;
-    }
-    .reason-text { font-size: 0.88rem; font-weight: 300; color: var(--silver); line-height: 1.7; }
-
-    /* PROCES */
-    .process {
-      padding: 8rem 8rem;
-      background: var(--navy2);
-    }
-    .process-header { text-align: center; margin-bottom: 5rem; }
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      position: relative;
-    }
-    .process-grid::before {
-      content: '';
-      position: absolute;
-      top: 50px; left: 12.5%; right: 12.5%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--accent), var(--accent), transparent);
-      opacity: 0.3;
-    }
-    .process-step {
-      padding: 2rem;
-      text-align: center;
-      position: relative;
-    }
-    .process-step-num {
-      width: 100px; height: 100px;
-      margin: 0 auto 2rem;
-      background: var(--steel);
-      border: 1px solid rgba(48,225,234,0.2);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-      clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .process-step:hover .process-step-num {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .process-step:hover .process-step-num span { color: var(--navy); }
-    .process-step-num span {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      color: var(--accent);
-      transition: color 0.3s;
-    }
-    .process-step-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.8rem;
-    }
-    .process-step-text {
-      font-size: 0.82rem;
-      color: var(--silver);
-      line-height: 1.7;
-    }
-
-    /* REALIZACJE */
-    .realizacje {
-      padding: 8rem 8rem;
-      background: var(--navy);
-    }
-    .realizacje-header { text-align: center; margin-bottom: 5rem; }
-    .realizacje-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .realizacja-card {
-      position: relative;
-      height: 380px;
-      overflow: hidden;
-      background: var(--steel);
-      border: 1px solid rgba(255,255,255,0.06);
-      cursor: pointer;
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-    }
-    .realizacja-card:hover { transform: scale(1.03); }
-    .realizacja-card:hover .realizacja-overlay { opacity: 1; }
-    .realizacja-img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .realizacja-card:hover .realizacja-img { transform: scale(1.1); }
-    .realizacja-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(9,3,21,0.95) 0%, transparent 60%);
-      display: flex; flex-direction: column;
-      justify-content: flex-end;
-      padding: 2rem;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .realizacja-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 0.5rem;
-    }
-    .realizacja-desc {
-      font-size: 0.85rem;
-      color: var(--silver);
-      line-height: 1.6;
-    }
-
-    /* CONTACT */
-    .contact {
-      padding: 8rem 8rem;
-      background: var(--navy2);
-    }
-    .contact-header { text-align: center; margin-bottom: 4rem; }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .contact-card {
-      background: var(--steel);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 3rem 2.5rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.3s;
-    }
-    .contact-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-    }
-    .contact-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(48,225,234,0.3);
-    }
-    .contact-card:hover::before { transform: scaleX(1); }
-    .contact-icon {
-      width: 80px; height: 80px;
-      margin: 0 auto 2rem;
-      background: rgba(48,225,234,0.1);
-      border: 1px solid rgba(48,225,234,0.2);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      transition: background 0.3s, border-color 0.3s, transform 0.3s;
-    }
-    .contact-card:hover .contact-icon {
-      background: var(--accent);
-      border-color: var(--accent);
-      transform: scale(1.1);
-    }
-    .contact-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .contact-value {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.3rem;
-      word-break: break-word;
-    }
-    .contact-value a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .contact-value a:hover { color: var(--accent); }
-    .contact-sub {
-      font-size: 0.82rem;
-      color: var(--silver);
-      line-height: 1.5;
-    }
-
-    /* MAP SECTION */
-    .map-section {
-      background: var(--navy);
-      padding: 8rem 8rem;
-    }
-    .map-header { text-align: center; margin-bottom: 4rem; }
-    .map-embed {
-      width: 100%; 
-      height: 500px;
-      border: 2px solid rgba(48,225,234,0.2);
-      filter: grayscale(30%) brightness(0.85);
-      transition: filter 0.4s;
-    }
-    .map-embed:hover { filter: grayscale(0%) brightness(1); }
-
-    /* FOOTER */
-    footer {
-      background: #040210;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 4rem 8rem 2rem;
-    }
-    .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 4rem;
-      padding-bottom: 3rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .footer-brand {}
-    .footer-logo {
-      display: flex; align-items: center; gap: 0.8rem;
-      margin-bottom: 1.5rem;
-      text-decoration: none;
-    }
-    .footer-desc {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--silver);
-      max-width: 320px;
-    }
-    .footer-col-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-    }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
-    .footer-links a {
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 300;
-      color: var(--silver);
-      transition: color 0.3s, padding-left 0.3s;
-      display: block;
-    }
-    .footer-links a:hover { color: var(--white); padding-left: 6px; }
-    .footer-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-top: 2rem;
-    }
-    .footer-copy {
-      font-size: 0.78rem;
-      color: rgba(178,203,202,0.5);
-    }
-    .footer-accent { color: var(--accent); }
-
-    /* BACK TO TOP */
-    .back-top {
-      position: fixed; bottom: 2.5rem; right: 2.5rem;
-      width: 50px; height: 50px;
-      background: var(--accent);
-      color: var(--navy);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-decoration: none;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.3s, transform 0.3s, background 0.3s;
-      z-index: 80;
-    }
-    .back-top.visible { opacity: 1; transform: translateY(0); }
-    .back-top:hover { background: var(--accent2); }
-
-    /* PHONE CTA FLOAT */
-    .phone-float {
-      position: fixed; bottom: 2.5rem; left: 2.5rem;
-      display: flex; align-items: center; gap: 0.8rem;
-      background: var(--steel);
-      border: 1px solid rgba(48,225,234,0.25);
-      padding: 0.8rem 1.4rem;
-      z-index: 80;
-      text-decoration: none;
-      transition: background 0.3s, border-color 0.3s;
-    }
-    .phone-float:hover { background: var(--accent); border-color: var(--accent); }
-    .phone-float:hover .pf-num { color: var(--navy); }
-    .phone-float:hover .pf-icon { color: var(--navy); }
-    .pf-icon { font-size: 1.1rem; color: var(--accent); transition: color 0.3s; }
-    .pf-text { display: flex; flex-direction: column; }
-    .pf-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--silver); transition: color 0.3s; }
-    .phone-float:hover .pf-label { color: var(--navy); }
-    .pf-num { font-weight: 700; font-size: 0.95rem; color: var(--white); transition: color 0.3s; }
-
-    /* SCROLL REVEAL */
-    .reveal {
-      opacity: 0; transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* NOISE OVERLAY */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    /* MOBILE */
-    @media (max-width: 1100px) {
-      nav { padding: 1rem 2rem; }
-      nav.scrolled { padding: 0.8rem 2rem; }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 8rem 2.5rem 4rem; }
-      .hero-right { display: none; }
-      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
-      .services { padding: 5rem 2.5rem; }
-      .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
-      .services-grid { grid-template-columns: 1fr; }
-      .whyus { padding: 5rem 2.5rem; grid-template-columns: 1fr; gap: 3rem; }
-      .whyus-visual { display: none; }
-      .process { padding: 5rem 2.5rem; }
-      .process-grid { grid-template-columns: 1fr 1fr; }
-      .process-grid::before { display: none; }
-      .realizacje { padding: 5rem 2.5rem; }
-      .realizacje-grid { grid-template-columns: 1fr; }
-      .contact { padding: 5rem 2.5rem; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .map-section { padding: 4rem 2.5rem; }
-      footer { padding: 3rem 2.5rem 2rem; }
-      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
-      .phone-float { display: none; }
-      .back-top { right: 1.5rem; bottom: 1.5rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-<!-- Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- Back To Top -->
 <a href="#top" class="back-top" id="backTop">↑</a>
 
 <!-- Phone Float -->
 <a href="tel:509055250" class="phone-float">
-  <span class="pf-icon">📞</span>
+  <span class="pf-icon"><i class="fas fa-phone"></i></span>
   <span class="pf-text">
     <span class="pf-label">Zadzwoń teraz</span>
     <span class="pf-num">509 055 250</span>
@@ -1006,8 +30,8 @@
 <nav id="navbar">
   <a href="#top" class="nav-logo">
     <div class="nav-logo-icon">
-		<img src="ema.png" alt="Emka Team Logo" class="logo-img">
-	</div>
+      <img src="ema.png" alt="Emka Team Logo" class="logo-img">
+    </div>
     <div>
       <div class="nav-logo-text">EMKA <span>TEAM</span></div>
       <div class="nav-logo-sub">Okna & Drzwi</div>
@@ -1077,16 +101,16 @@
         <div class="window-corner wc-bl"></div>
         <div class="window-corner wc-br"></div>
         <div class="window-inner">
-          <div class="window-pane"></div>
-          <div class="window-pane"></div>
-          <div class="window-pane"></div>
-          <div class="window-pane"></div>
+          <div class="window-pane" data-img="zdjecie1-large.jpg"></div>
+          <div class="window-pane" data-img="zdjecie2-large.jpg"></div>
+          <div class="window-pane" data-img="zdjecie3-large.jpg"></div>
+          <div class="window-pane" data-img="zdjecie4-large.jpg"></div>
         </div>
         <div class="window-handle"></div>
       </div>
 
-      <div class="float-tag float-tag-1">⊞ Okna PVC</div>
-      <div class="float-tag float-tag-2">⊠ Rolety & Żaluzje</div>
+      <div class="float-tag float-tag-1"><i class="fas fa-window-maximize"></i> Okna PVC</div>
+      <div class="float-tag float-tag-2"><i class="fas fa-bars"></i> Rolety & Żaluzje</div>
     </div>
   </div>
 </section>
@@ -1108,7 +132,7 @@
   <div class="services-grid">
     <div class="service-card reveal">
       <div class="service-num">01</div>
-      <span class="service-icon">🪟</span>
+      <span class="service-icon"><i class="fas fa-window-maximize"></i></span>
       <div class="service-name">Okna</div>
       <p class="service-text">Montaż, wymiana i serwis okien PVC, aluminiowych i drewnianych. Dobieramy optymalne rozwiązania pod każdy projekt.</p>
       <ul class="service-features">
@@ -1121,7 +145,7 @@
 
     <div class="service-card reveal" style="transition-delay:0.1s">
       <div class="service-num">02</div>
-      <span class="service-icon">🚪</span>
+      <span class="service-icon"><i class="fas fa-door-closed"></i></span>
       <div class="service-name">Drzwi</div>
       <p class="service-text">Drzwi wejściowe, wewnętrzne i techniczne. Montaż z precyzją i dbałością o szczelność oraz bezpieczeństwo.</p>
       <ul class="service-features">
@@ -1134,7 +158,7 @@
 
     <div class="service-card reveal" style="transition-delay:0.2s">
       <div class="service-num">03</div>
-      <span class="service-icon">⊟</span>
+      <span class="service-icon"><i class="fas fa-bars"></i></span>
       <div class="service-name">Rolety</div>
       <p class="service-text">Rolety zewnętrzne, żaluzje i moskitiery. Sterowanie ręczne lub elektryczne – zgodnie z potrzebami klienta.</p>
       <ul class="service-features">
@@ -1147,7 +171,7 @@
 
     <div class="service-card reveal" style="transition-delay:0.3s">
       <div class="service-num">04</div>
-      <span class="service-icon">🔧</span>
+      <span class="service-icon"><i class="fas fa-wrench"></i></span>
       <div class="service-name">Serwis & Naprawy</div>
       <p class="service-text">Profesjonalny serwis i naprawa wszystkich elementów stolarki okiennej i drzwiowej. Szybka interwencja na terenie całego regionu.</p>
       <ul class="service-features">
@@ -1160,7 +184,7 @@
 
     <div class="service-card reveal" style="transition-delay:0.4s">
       <div class="service-num">05</div>
-      <span class="service-icon">📐</span>
+      <span class="service-icon"><i class="fas fa-ruler-combined"></i></span>
       <div class="service-name">Pomiary & Doradztwo</div>
       <p class="service-text">Bezpłatna wizja lokalna, profesjonalne pomiary i doradztwo w zakresie doboru produktów i rozwiązań technicznych.</p>
       <ul class="service-features">
@@ -1173,7 +197,7 @@
 
     <div class="service-card reveal" style="transition-delay:0.5s">
       <div class="service-num">06</div>
-      <span class="service-icon">🛡️</span>
+      <span class="service-icon"><i class="fas fa-shield-alt"></i></span>
       <div class="service-name">Gwarancja & Opieka</div>
       <p class="service-text">Gwarancja na wszystkie wykonane prace. Zapewniamy długoterminową opiekę serwisową i szybki czas reakcji w razie problemów.</p>
       <ul class="service-features">
@@ -1192,12 +216,12 @@
     <div class="whyus-big-text">OK<br>NA</div>
     <div class="whyus-line"></div>
     <div class="whyus-card whyus-card-1">
-      <div class="whyus-card-icon">⚡</div>
+      <div class="whyus-card-icon"><i class="fas fa-bolt"></i></div>
       <div class="whyus-card-title">Szybka realizacja</div>
       <div class="whyus-card-text">Terminowość to nasz priorytet. Zawsze dotrzymujemy ustalonych terminów.</div>
     </div>
     <div class="whyus-card whyus-card-2">
-      <div class="whyus-card-icon">📍</div>
+      <div class="whyus-card-icon"><i class="fas fa-map-marker-alt"></i></div>
       <div class="whyus-card-title">Lokalnie z Lasocic</div>
       <div class="whyus-card-text">Firma z regionu, doskonale znamy lokalne potrzeby i specyfikę.</div>
     </div>
@@ -1276,23 +300,23 @@
     <h2 class="section-title">Nasze <span>realizacje</span></h2>
   </div>
   <div class="realizacje-grid">
-    <div class="realizacja-card reveal">
-      <img src="realizacja1.jpg" alt="Realizacja. Motaż okien PCV dla domu jednorodzinnego." class="realizacja-img">
+    <div class="realizacja-card reveal" data-img="realizacja1-large.jpg">
+      <img src="realizacja1.jpg" alt="Realizacja. Montaż okien PCV dla domu jednorodzinnego." class="realizacja-img">
       <div class="realizacja-overlay">
         <div class="realizacja-title">Montaż okien PCV</div>
         <div class="realizacja-desc">Dom jednorodzinny – kompleksowa wymiana wszystkich okien</div>
       </div>
     </div>
     
-    <div class="realizacja-card reveal" style="transition-delay:0.1s">
+    <div class="realizacja-card reveal" style="transition-delay:0.1s" data-img="realizacja2-large.jpg">
       <img src="realizacja2.jpg" alt="Realizacja. Montaż Drzwi wejściowych w domu jednorodzinnym." class="realizacja-img">
       <div class="realizacja-overlay">
         <div class="realizacja-title">Drzwi wejściowe</div>
-        <div class="realizacja-desc">Opis</div>
+        <div class="realizacja-desc">Montaż drzwi antywłamaniowych z systemem multipoint</div>
       </div>
     </div>
     
-    <div class="realizacja-card reveal" style="transition-delay:0.2s">
+    <div class="realizacja-card reveal" style="transition-delay:0.2s" data-img="realizacja3-large.jpg">
       <img src="realizacja3.jpg" alt="Realizacja. Montaż rolet z napędem elektrycznym." class="realizacja-img">
       <div class="realizacja-overlay">
         <div class="realizacja-title">Rolety zewnętrzne</div>
@@ -1300,7 +324,7 @@
       </div>
     </div>
     
-    <div class="realizacja-card reveal" style="transition-delay:0.3s">
+    <div class="realizacja-card reveal" style="transition-delay:0.3s" data-img="realizacja4-large.jpg">
       <img src="realizacja4.jpg" alt="Realizacja 4" class="realizacja-img">
       <div class="realizacja-overlay">
         <div class="realizacja-title">Okna aluminiowe</div>
@@ -1308,7 +332,7 @@
       </div>
     </div>
     
-    <div class="realizacja-card reveal" style="transition-delay:0.4s">
+    <div class="realizacja-card reveal" style="transition-delay:0.4s" data-img="realizacja5-large.jpg">
       <img src="realizacja5.jpg" alt="Realizacja 5" class="realizacja-img">
       <div class="realizacja-overlay">
         <div class="realizacja-title">Drzwi balkonowe</div>
@@ -1316,7 +340,7 @@
       </div>
     </div>
     
-    <div class="realizacja-card reveal" style="transition-delay:0.5s">
+    <div class="realizacja-card reveal" style="transition-delay:0.5s" data-img="realizacja6-large.jpg">
       <img src="realizacja6.jpg" alt="Realizacja 6" class="realizacja-img">
       <div class="realizacja-overlay">
         <div class="realizacja-title">Kompleksowy projekt</div>
@@ -1335,21 +359,21 @@
   
   <div class="contact-grid">
     <div class="contact-card reveal">
-      <div class="contact-icon">📞</div>
+      <div class="contact-icon"><i class="fas fa-phone"></i></div>
       <div class="contact-title">Telefon</div>
       <div class="contact-value"><a href="tel:509055250">509 055 250</a></div>
       <div class="contact-sub">Zadzwoń</div>
     </div>
     
     <div class="contact-card reveal" style="transition-delay:0.1s">
-      <div class="contact-icon">📍</div>
+      <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
       <div class="contact-title">Adres</div>
       <div class="contact-value">ul. Święciechowska 16</div>
       <div class="contact-sub">64-100 Lasocice</div>
     </div>
     
     <div class="contact-card reveal" style="transition-delay:0.2s">
-      <div class="contact-icon">✉️</div>
+      <div class="contact-icon"><i class="fas fa-envelope"></i></div>
       <div class="contact-title">E-mail</div>
       <div class="contact-value"><a href="mailto:biuro.emkateam@gmail.com">biuro.emkateam@gmail.com</a></div>
       <div class="contact-sub">Odpowiadamy jak najszybciej</div>
@@ -1363,13 +387,13 @@
     <h2 class="section-title">Gdzie nas <span>znajdziesz</span></h2>
   </div>
   <iframe 
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2465.890290111362!2d16.48352377638714!3d51.82643457188763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470597128ceaf645%3A0x67001c6bcf80b9a7!2sEMKA%20TEAM%20WINDOWS%20INSTALLATION!5e0!3m2!1spl!2spl!4v1774806677164!5m2!1spl!2spl0" 
-  class="map-embed reveal" 
-  style="border:0; width:100%; height:450px;" 
-  allowfullscreen="" 
-  loading="lazy" 
-  referrerpolicy="no-referrer-when-downgrade">
-</iframe>
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2465.890290111362!2d16.48352377638714!3d51.82643457188763!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470597128ceaf645%3A0x67001c6bcf80b9a7!2sEMKA%20TEAM%20WINDOWS%20INSTALLATION!5e0!3m2!1spl!2spl!4v1774806677164!5m2!1spl!2spl0" 
+    class="map-embed reveal" 
+    style="border:0; width:100%; height:450px;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
 </div>
 
 <!-- FOOTER -->
@@ -1378,8 +402,8 @@
     <div class="footer-brand">
       <a href="#top" class="footer-logo">
         <div class="nav-logo-icon">
-			<img src="ema.png" alt="Emka Team Logo" class="logo-img">
-		</div>
+          <img src="ema.png" alt="Emka Team Logo" class="logo-img">
+        </div>
         <div>
           <div class="nav-logo-text">EMKA <span>TEAM</span></div>
           <div class="nav-logo-sub">Windows Installation</div>
@@ -1400,9 +424,9 @@
     <div>
       <div class="footer-col-title">Kontakt</div>
       <ul class="footer-links">
-        <li><a href="tel:509055250">📞 509 055 250</a></li>
-        <li><a href="mailto:biuro.emkateam@gmail.com">✉️ biuro.emkateam@gmail.com</a></li>
-        <li><a href="#kontakt">📍 Święciechowska 16</a></li>
+        <li><a href="tel:509055250"><i class="fas fa-phone"></i> 509 055 250</a></li>
+        <li><a href="mailto:biuro.emkateam@gmail.com"><i class="fas fa-envelope"></i> biuro.emkateam@gmail.com</a></li>
+        <li><a href="#kontakt"><i class="fas fa-map-marker-alt"></i> Święciechowska 16</a></li>
         <li><a href="#kontakt">64-100 Lasocice</a></li>
       </ul>
     </div>
@@ -1413,33 +437,15 @@
   </div>
 </footer>
 
-<script>
-  // Cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-  });
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
-    requestAnimationFrame(animRing);
-  }
-  animRing();
-  document.querySelectorAll('a, button, .service-card, .reason, .realizacja-card, .contact-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform += ' scale(2)';
-      ring.style.transform += ' scale(1.5)';
-      ring.style.opacity = '1';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.opacity = '0.5';
-    });
-  });
+<!-- LIGHTBOX MODAL -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <div class="lightbox-content">
+    <img src="" alt="" id="lightboxImg">
+  </div>
+</div>
 
+<script>
   // Navbar scroll
   const nav = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -1469,6 +475,52 @@
     });
   }, { threshold: 0.4 });
   sections.forEach(s => io.observe(s));
+
+  // LIGHTBOX
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  // Otwórz lightbox dla realizacji
+  document.querySelectorAll('.realizacja-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const imgSrc = card.getAttribute('data-img');
+      lightboxImg.src = imgSrc;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Otwórz lightbox dla window-pane
+  document.querySelectorAll('.window-pane').forEach(pane => {
+    pane.addEventListener('click', () => {
+      const imgSrc = pane.getAttribute('data-img');
+      lightboxImg.src = imgSrc;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Zamknij lightbox
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // ESC key zamyka lightbox
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
 </script>
 </body>
 </html>
