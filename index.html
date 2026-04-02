@@ -43,6 +43,8 @@
     <li><a href="#proces">Proces</a></li>
     <li><a href="#realizacje">Realizacje</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
+    <li><a href="galeria.html" class="nav-subpage"><i class="fas fa-images"></i> Galeria</a></li>
+    <li><a href="opinie.html" class="nav-subpage"><i class="fas fa-star"></i> Opinie</a></li>
     <li><a href="tel:509055250" class="nav-cta">509 055 250</a></li>
   </ul>
 </nav>
@@ -375,7 +377,7 @@
     <div class="contact-card reveal" style="transition-delay:0.2s">
       <div class="contact-icon"><i class="fas fa-envelope"></i></div>
       <div class="contact-title">E-mail</div>
-      <div class="contact-value"><a href="mailto:biuro.emkateam@gmail.com">biuro@emkateam.pl</a></div>
+      <div class="contact-value"><a href="mailto:biuro.emkateam@gmail.com">biuro.emkateam@gmail.com</a></div>
       <div class="contact-sub">Odpowiadamy jak najszybciej</div>
     </div>
   </div>
@@ -440,8 +442,14 @@
 <!-- LIGHTBOX MODAL -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <button class="lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+  <button class="lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
   <div class="lightbox-content">
     <img src="" alt="" id="lightboxImg">
+  </div>
+  <div class="lightbox-info" id="lightboxInfo">
+    <div class="lightbox-title"></div>
+    <div class="lightbox-desc"></div>
   </div>
 </div>
 
@@ -476,48 +484,146 @@
   }, { threshold: 0.4 });
   sections.forEach(s => io.observe(s));
 
+ // Smooth scroll dla Back to Top
+  const backTopBtn = document.getElementById('backTop');
+  backTopBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+
   // LIGHTBOX
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const lightboxInfo = document.getElementById('lightboxInfo');
+  
+  let currentImages = [];
+  let currentIndex = 0;
+  let isAnimating = false;
 
-  // Otwórz lightbox dla realizacji
-  document.querySelectorAll('.realizacja-card').forEach(card => {
+  function updateLightboxInfo(card) {
+    const title = card.querySelector('.realizacja-title')?.textContent || '';
+    const desc = card.querySelector('.realizacja-desc')?.textContent || '';
+    
+    lightboxInfo.querySelector('.lightbox-title').textContent = title;
+    lightboxInfo.querySelector('.lightbox-desc').textContent = desc;
+  }
+
+  function showImage(index, direction = 'none') {
+    if (isAnimating || index < 0 || index >= currentImages.length) return;
+    
+    isAnimating = true;
+    currentIndex = index;
+    
+    const imgData = currentImages[index];
+    const newImg = new Image();
+    newImg.src = imgData.src;
+    
+    newImg.onload = () => {
+      if (direction === 'next') {
+        lightboxImg.style.animation = 'slideOutLeft 0.4s ease-out';
+        setTimeout(() => {
+          lightboxImg.src = imgData.src;
+          lightboxImg.style.animation = 'slideInRight 0.4s ease-out';
+          updateLightboxInfo(imgData.card);
+          setTimeout(() => {
+            lightboxImg.style.animation = '';
+            isAnimating = false;
+          }, 400);
+        }, 400);
+      } else if (direction === 'prev') {
+        lightboxImg.style.animation = 'slideOutRight 0.4s ease-out';
+        setTimeout(() => {
+          lightboxImg.src = imgData.src;
+          lightboxImg.style.animation = 'slideInLeft 0.4s ease-out';
+          updateLightboxInfo(imgData.card);
+          setTimeout(() => {
+            lightboxImg.style.animation = '';
+            isAnimating = false;
+          }, 400);
+        }, 400);
+      } else {
+        lightboxImg.src = imgData.src;
+        updateLightboxInfo(imgData.card);
+        isAnimating = false;
+      }
+    };
+  }
+
+  // Otwórz lightbox dla realizacji (ZE STRZAŁKAMI)
+  // Otwórz lightbox dla realizacji (ZE STRZAŁKAMI I OPISEM)
+  document.querySelectorAll('.realizacja-card').forEach((card, index) => {
     card.addEventListener('click', () => {
-      const imgSrc = card.getAttribute('data-img');
-      lightboxImg.src = imgSrc;
-      lightbox.classList.add('active');
+      const allCards = document.querySelectorAll('.realizacja-card');
+      currentImages = Array.from(allCards).map(c => ({
+        src: c.getAttribute('data-img'),
+        card: c
+      }));
+      currentIndex = index;
+      
+      lightboxImg.src = currentImages[currentIndex].src;
+      updateLightboxInfo(card);
+      lightbox.classList.add('active', 'has-info');
+      lightboxPrev.style.display = 'flex';
+      lightboxNext.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     });
   });
 
-  // Otwórz lightbox dla window-pane
-  document.querySelectorAll('.window-pane').forEach(pane => {
+  // Otwórz lightbox dla window-pane (BEZ STRZAŁEK I OPISÓW - WYCENTROWANE)
+  document.querySelectorAll('.window-pane').forEach((pane) => {
     pane.addEventListener('click', () => {
       const imgSrc = pane.getAttribute('data-img');
       lightboxImg.src = imgSrc;
+      lightbox.classList.remove('has-info');
       lightbox.classList.add('active');
+      lightboxPrev.style.display = 'none';
+      lightboxNext.style.display = 'none';
       document.body.style.overflow = 'hidden';
     });
+  });
+
+  // Nawigacja lightbox
+  lightboxPrev.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      showImage(currentIndex - 1, 'prev');
+    }
+  });
+
+  lightboxNext.addEventListener('click', () => {
+    if (currentIndex < currentImages.length - 1) {
+      showImage(currentIndex + 1, 'next');
+    }
+  });
+
+  // Klawisze strzałek
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    
+    if (e.key === 'ArrowLeft') {
+      lightboxPrev.click();
+    } else if (e.key === 'ArrowRight') {
+      lightboxNext.click();
+    } else if (e.key === 'Escape') {
+      lightbox.classList.remove('active', 'has-info');
+      document.body.style.overflow = '';
+    }
   });
 
   // Zamknij lightbox
   lightboxClose.addEventListener('click', () => {
-    lightbox.classList.remove('active');
+    lightbox.classList.remove('active', 'has-info');
     document.body.style.overflow = '';
   });
 
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // ESC key zamyka lightbox
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-      lightbox.classList.remove('active');
+      lightbox.classList.remove('active', 'has-info');
       document.body.style.overflow = '';
     }
   });
