@@ -16,10 +16,10 @@
 
 <a href="#top" class="back-top" id="backTop">↑</a>
 
-<a href="tel:509055250" class="phone-float">
+<a href="tel:509055250" class="phone-float" id="phoneFloat">
   <span class="pf-icon"><i class="fas fa-phone"></i></span>
   <span class="pf-text">
-    <span class="pf-label">Zadzwoń teraz</span>
+    <span class="pf-label">Zadzwoń</span>
     <span class="pf-num">509 055 250</span>
   </span>
 </a>
@@ -35,13 +35,14 @@
     </div>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#uslugi">Usługi</a></li>
-    <li><a href="index.html#dlaczego">O Nas</a></li>
-    <li><a href="index.html#proces">Proces</a></li>
-    <li><a href="index.html#realizacje">Realizacje</a></li>
-    <li><a href="index.html#kontakt">Kontakt</a></li>
+    <li class="desktop-only"><a href="index.html#uslugi">Usługi</a></li>
+    <li class="desktop-only"><a href="index.html#dlaczego">O Nas</a></li>
+    <li class="desktop-only"><a href="index.html#proces">Proces</a></li>
+    <li class="desktop-only"><a href="index.html#realizacje">Realizacje</a></li>
+    <li class="desktop-only"><a href="index.html#kontakt">Kontakt</a></li>
+    <li class="desktop-only"><a href="galeria.html" class="nav-subpage"><i class="fas fa-images"></i> Galeria</a></li>
     <li><a href="opinie.html" class="nav-subpage"><i class="fas fa-star"></i> Opinie</a></li>
-    <li><a href="tel:509055250" class="nav-cta">509 055 250</a></li>
+    <li class="desktop-only"><a href="tel:509055250" class="nav-cta">509 055 250</a></li>
     <li><a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Powrót</a></li>
   </ul>
   </ul>
@@ -126,7 +127,7 @@
       <div class="footer-col-title">Kontakt</div>
       <ul class="footer-links">
         <li><a href="tel:509055250"><i class="fas fa-phone"></i> 509 055 250</a></li>
-        <li><a href="mailto:biuro.emkateam@gmail.com"><i class="fas fa-envelope"></i> biuro.emkateam@gmail.com</a></li>
+        <li><a href="mailto:biuro@emkateam.pl"><i class="fas fa-envelope"></i> biuro@emkateam.pl</a></li>
         <li><a href="index.html#kontakt"><i class="fas fa-map-marker-alt"></i> Święciechowska 16</a></li>
         <li><a href="index.html#kontakt">64-100 Lasocice</a></li>
       </ul>
@@ -149,9 +150,17 @@
 
 <script>
   const nav = document.getElementById('navbar');
+  const phoneFloat = document.getElementById('phoneFloat');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
     document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+    
+    // Pokaż floating phone gdy subpage-hero wyjdzie z widoku
+    const subpageHero = document.querySelector('.subpage-hero');
+    if (subpageHero) {
+      const rect = subpageHero.getBoundingClientRect();
+      phoneFloat.classList.toggle('visible', rect.bottom < 0);
+    }
   });
 
   const observer = new IntersectionObserver(entries => {
