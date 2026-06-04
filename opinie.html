@@ -11,6 +11,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @media (min-width: 769px) {
+      .opinie-section .opinie-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px; /* dopasuj odstęp według uznania, jeśli w style.css jest inny */
+      }
+      .opinie-section .opinie-grid .opinia-card:nth-child(3) {
+        grid-column: span 2;
+        justify-self: center;
+        width: 100%;
+        max-width: 540px; /* ogranicza szerokość trzeciej karty, żeby nie była za szeroka */
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -100,7 +116,6 @@
       </a>
     </div>
 
-    <!-- Nowa opinia -->
     <div class="opinia-card reveal" style="transition-delay:0.2s">
       <div class="opinia-header">
         <div class="opinia-author">Monika Stachowska</div>
@@ -171,7 +186,6 @@
     nav.classList.toggle('scrolled', window.scrollY > 60);
     document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
     
-    // Pokaż floating phone gdy subpage-hero wyjdzie z widoku
     const subpageHero = document.querySelector('.subpage-hero');
     if (subpageHero) {
       const rect = subpageHero.getBoundingClientRect();
